@@ -1,5 +1,5 @@
 // react & next
-import { useLayoutEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import Head from 'next/head'
 // libraries
 import Parser from 'rss-parser'
@@ -21,27 +21,25 @@ export default function Home({ feed: { items } }) {
   const [screen, setScreen] = useState(false)
   const [height, setHeight] = useState(false)
 
-  useLayoutEffect(() => {
+  useEffect(() => {
     let vh = window.innerHeight * 0.01
     document.documentElement.style.setProperty('--vh', `${vh}px`)
+    setHeight(document.body.clientHeight)
     if (window.matchMedia('(orientation: portrait)').matches) {
       setScreen('portrait')
-      setHeight(document.body.clientHeight)
     } else {
       setScreen('landscape')
-      setHeight(false)
     }
     window.addEventListener(
       'resize',
       debounce(() => {
         vh = window.innerHeight * 0.01
         document.documentElement.style.setProperty('--vh', `${vh}px`)
+        setHeight(document.body.clientHeight)
         if (window.matchMedia('(orientation: portrait)').matches) {
           setScreen('portrait')
-          setHeight(document.body.clientHeight)
         } else {
           setScreen('landscape')
-          setHeight(false)
         }
       }, 150)
     )

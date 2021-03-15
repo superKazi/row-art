@@ -1,5 +1,5 @@
 import Image from 'next/image'
-import { useState, useLayoutEffect, useRef } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import styles from './rowimage.module.css'
 
 export default function RowImage({
@@ -21,8 +21,8 @@ export default function RowImage({
 
   const myImg = useRef(null)
 
-  useLayoutEffect(() => {
-    if (screen === 'portrait' && height && index !== 0) {
+  useEffect(() => {
+    if (screen === 'portrait' && index !== 0) {
       setStyleObj({
         transform: `translateY(-${randomInteger(
           50,
@@ -60,7 +60,6 @@ export default function RowImage({
           width="160"
           height="90"
           alt={credit}
-          priority={index === 0 ? true : false}
         />
         <figcaption className={styles.cred}>{contentSnippet}</figcaption>
       </figure>
