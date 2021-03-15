@@ -52,12 +52,12 @@
 	}
 
 	.section {
-		position: relative;
 		display: grid;
 		grid-template-columns: repeat(12, minmax(10px, 1fr));
 		grid-template-rows: repeat(12, max-content);
 		grid-gap: 2rem;
-		top: initial;
+		top: calc(100 * var(--vh, 1vh));
+		width: 100%;
 		transform: initial;
 	}
 

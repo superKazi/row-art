@@ -38,7 +38,7 @@ export default function RowImage({
           : `${randomInteger(4, 5)} / ${randomInteger(11, 13)}`,
         marginTop:
           index === 0
-            ? `calc(${randomInteger(5, 25)} * var(--vh, 1vh))`
+            ? `calc(${randomInteger(25, 75)} * var(--vh, 1vh) * -1)`
             : `calc(${randomInteger(75, 175)} * var(--vh, 1vh))`,
       })
     }
