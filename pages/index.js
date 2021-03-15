@@ -1,65 +1,127 @@
+// react & next
+import { useLayoutEffect, useState } from 'react'
 import Head from 'next/head'
-import styles from '../styles/Home.module.css'
+// libraries
+import Parser from 'rss-parser'
+import { debounce } from 'mini-debounce'
+// components & styles
+import RowImage from '../components/rowimage'
+import styles from '../styles/style.module.css'
 
-export default function Home() {
+export default function Home({ feed: { items } }) {
+  const images = items.map((item) => {
+    let fullImageItem = { ...item }
+    fullImageItem.media.$.url = fullImageItem.media.$.url.replace(
+      '160x160',
+      '1600x900'
+    )
+    return fullImageItem
+  })
+
+  const [screen, setScreen] = useState(false)
+  const [height, setHeight] = useState(false)
+
+  useLayoutEffect(() => {
+    let vh = window.innerHeight * 0.01
+    document.documentElement.style.setProperty('--vh', `${vh}px`)
+    window.matchMedia('(orientation: portrait)').matches
+      ? setScreen('portrait')
+      : setScreen('landscape')
+    screen === 'portrait' && setHeight(document.body.clientHeight)
+    window.addEventListener(
+      'resize',
+      debounce(() => {
+        vh = window.innerHeight * 0.01
+        document.documentElement.style.setProperty('--vh', `${vh}px`)
+        window.matchMedia('(orientation: portrait)').matches
+          ? setScreen('portrait')
+          : setScreen('landscape')
+        screen === 'portrait'
+          ? setHeight(document.body.clientHeight)
+          : setHeight(false)
+      }, 150)
+    )
+  }, [])
+
   return (
-    <div className={styles.container}>
-      <Head>
-        <title>Create Next App</title>
-        <link rel="icon" href="/favicon.ico" />
-      </Head>
-
+    <>
+      <Head />
       <main className={styles.main}>
-        <h1 className={styles.title}>
-          Welcome to <a href="https://nextjs.org">Next.js!</a>
+        <h1 className={styles.hed}>
+          <a className={styles.row} href="https://restofworld.org">
+            Rest of World
+          </a>
+          <br />
+          Latest Stories
+          <br />
+          via Imagery
         </h1>
-
-        <p className={styles.description}>
-          Get started by editing{' '}
-          <code className={styles.code}>pages/index.js</code>
-        </p>
-
-        <div className={styles.grid}>
-          <a href="https://nextjs.org/docs" className={styles.card}>
-            <h3>Documentation &rarr;</h3>
-            <p>Find in-depth information about Next.js features and API.</p>
-          </a>
-
-          <a href="https://nextjs.org/learn" className={styles.card}>
-            <h3>Learn &rarr;</h3>
-            <p>Learn about Next.js in an interactive course with quizzes!</p>
-          </a>
-
-          <a
-            href="https://github.com/vercel/next.js/tree/master/examples"
-            className={styles.card}
-          >
-            <h3>Examples &rarr;</h3>
-            <p>Discover and deploy boilerplate example Next.js projects.</p>
-          </a>
-
-          <a
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-            className={styles.card}
-          >
-            <h3>Deploy &rarr;</h3>
-            <p>
-              Instantly deploy your Next.js site to a public URL with Vercel.
-            </p>
-          </a>
-        </div>
+        {screen === 'portrait' && (
+          <p className={styles.point} aria-label="scroll right">
+            👉
+          </p>
+        )}
+        {screen === 'landscape' && (
+          <p className={styles.point} aria-label="scroll down">
+            👇
+          </p>
+        )}
+        {screen && (
+          <section className={styles.section}>
+            {images.map(
+              (
+                {
+                  title,
+                  contentSnippet,
+                  credit,
+                  link,
+                  media: {
+                    $: { url },
+                  },
+                },
+                index
+              ) => (
+                <RowImage
+                  key={url}
+                  title={title}
+                  contentSnippet={contentSnippet}
+                  credit={credit}
+                  link={link}
+                  url={url}
+                  index={index}
+                  screen={screen}
+                  height={height}
+                />
+              )
+            )}
+          </section>
+        )}
       </main>
-
-      <footer className={styles.footer}>
-        <a
-          href="https://vercel.com?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Powered by{' '}
-          <img src="/vercel.svg" alt="Vercel Logo" className={styles.logo} />
-        </a>
-      </footer>
-    </div>
+    </>
   )
+}
+
+// This function gets called at build time on server-side.
+// It may be called again, on a serverless function, if
+// revalidation is enabled and a new request comes in
+export async function getStaticProps() {
+  const parser = new Parser({
+    customFields: {
+      item: [
+        ['media:content', 'media'],
+        ['media:credit', 'credit'],
+      ],
+    },
+  })
+  const feed = await parser.parseURL('https://restofworld.org/feed/latest/')
+
+  return {
+    props: {
+      feed,
+    },
+    // Next.js will attempt to re-generate the page:
+    // - When a request comes in
+    // - At most once every second
+    revalidate: 3600, // In seconds
+  }
 }

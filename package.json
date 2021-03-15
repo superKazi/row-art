@@ -1,5 +1,5 @@
 {
-  "name": "row-illos",
+  "name": "row-art",
   "version": "0.1.0",
   "private": true,
   "scripts": {
@@ -8,8 +8,16 @@
     "start": "next start"
   },
   "dependencies": {
+    "mini-debounce": "^1.0.8",
     "next": "10.0.8",
     "react": "17.0.1",
-    "react-dom": "17.0.1"
+    "react-dom": "17.0.1",
+    "rss-parser": "^3.12.0"
+  },
+  "devDependencies": {
+    "eslint": "^7.22.0",
+    "eslint-config-prettier": "^8.1.0",
+    "eslint-plugin-react": "^7.22.0",
+    "prettier": "2.2.1"
   }
 }

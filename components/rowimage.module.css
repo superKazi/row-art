@@ -1,0 +1,42 @@
+.link {
+  position: relative;
+  display: block;
+  width: 100%;
+  margin-right: 4rem;
+}
+
+.link:last-child {
+  margin-right: 1rem;
+}
+
+.fig {
+  width: calc(100vw - 2rem);
+}
+
+.cred {
+  border: 0;
+  clip: rect(0 0 0 0);
+  height: auto;
+  margin: 0;
+  overflow: hidden;
+  padding: 0;
+  position: absolute;
+  width: 1px;
+  white-space: nowrap;
+}
+
+@media (orientation: landscape) {
+
+  .link, .link:last-child {
+    margin: auto;
+  }
+
+  .fig {
+    width: 100%;
+    transition: transform 150ms ease-in;
+  }
+
+  .fig:hover {
+    transform: scale(1.025);
+  }
+}
