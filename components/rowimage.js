@@ -1,5 +1,5 @@
 import Image from 'next/image'
-import { useState, useEffect, useRef } from 'react'
+import { useState, useLayoutEffect, useRef } from 'react'
 import styles from './rowimage.module.css'
 
 export default function RowImage({
@@ -21,7 +21,7 @@ export default function RowImage({
 
   const myImg = useRef(null)
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     if (screen === 'portrait' && index !== 0) {
       setStyleObj({
         transform: `translateY(-${randomInteger(
@@ -38,7 +38,7 @@ export default function RowImage({
           : `${randomInteger(4, 5)} / ${randomInteger(11, 13)}`,
         marginTop:
           index === 0
-            ? `calc(${randomInteger(25, 75)} * var(--vh, 1vh) * -1)`
+            ? `calc(${randomInteger(5, 25)} * var(--vh, 1vh))`
             : `calc(${randomInteger(75, 175)} * var(--vh, 1vh))`,
       })
     }
