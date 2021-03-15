@@ -38,8 +38,8 @@ export default function RowImage({
           : `${randomInteger(4, 5)} / ${randomInteger(11, 13)}`,
         marginTop:
           index === 0
-            ? `${randomInteger(5, 25)}rem`
-            : `${randomInteger(10, 50)}rem`,
+            ? `calc(${randomInteger(5, 25)} * var(--vh, 1vh))`
+            : `calc(${randomInteger(75, 175)} * var(--vh, 1vh))`,
       })
     }
   }, [screen])
@@ -60,6 +60,7 @@ export default function RowImage({
           width="160"
           height="90"
           alt={credit}
+          priority={index === 0 ? true : false}
         />
         <figcaption className={styles.cred}>{contentSnippet}</figcaption>
       </figure>

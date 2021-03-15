@@ -35,8 +35,7 @@ html:focus-within {
 html { font: 100%; }
 
 body {
-  min-height: 100vh;
-  min-height: calc(100 * var(--vh));
+  min-height: calc(100 * var(--vh, 1vh));
   text-rendering: optimizeSpeed;
   line-height: 1.2;
   font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
