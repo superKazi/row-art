@@ -60,7 +60,6 @@ export default function RowImage({
           width="160"
           height="90"
           alt={credit}
-          priority={index === 0 ? true : false}
         />
         <figcaption className={styles.cred}>{contentSnippet}</figcaption>
       </figure>
