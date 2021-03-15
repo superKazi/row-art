@@ -24,21 +24,25 @@ export default function Home({ feed: { items } }) {
   useLayoutEffect(() => {
     let vh = window.innerHeight * 0.01
     document.documentElement.style.setProperty('--vh', `${vh}px`)
-    window.matchMedia('(orientation: portrait)').matches
-      ? setScreen('portrait')
-      : setScreen('landscape')
-    screen === 'portrait' && setHeight(document.body.clientHeight)
+    if (window.matchMedia('(orientation: portrait)').matches) {
+      setScreen('portrait')
+      setHeight(document.body.clientHeight)
+    } else {
+      setScreen('landscape')
+      setHeight(false)
+    }
     window.addEventListener(
       'resize',
       debounce(() => {
         vh = window.innerHeight * 0.01
         document.documentElement.style.setProperty('--vh', `${vh}px`)
-        window.matchMedia('(orientation: portrait)').matches
-          ? setScreen('portrait')
-          : setScreen('landscape')
-        screen === 'portrait'
-          ? setHeight(document.body.clientHeight)
-          : setHeight(false)
+        if (window.matchMedia('(orientation: portrait)').matches) {
+          setScreen('portrait')
+          setHeight(document.body.clientHeight)
+        } else {
+          setScreen('landscape')
+          setHeight(false)
+        }
       }, 150)
     )
   }, [])
