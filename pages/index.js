@@ -20,6 +20,7 @@ export default function Home({ feed: { items } }) {
 
   const [screen, setScreen] = useState(false)
   const [height, setHeight] = useState(false)
+  const [ml, setMl] = useState(false)
 
   useEffect(() => {
     let vh = window.innerHeight * 0.01
@@ -47,7 +48,25 @@ export default function Home({ feed: { items } }) {
 
   return (
     <>
-      <Head />
+      <Head>
+        <title>Rest of World Latest Stories via imagery</title>
+        <meta
+          name="Description"
+          content="If you’d like to choose which recent story to read solely by lede image, try this!"
+        />
+        <meta name="robots" content="noindex, follow" />
+        <meta
+          property="og:title"
+          content="Rest of World Latest Stories via imagery"
+        />
+        <meta
+          property="og:description"
+          content="If you’d like to choose which recent story to read solely by lede image, try this!"
+        />
+        <meta property="og:image" content={images[0].media.$.url} />
+        <meta property="og:url" content="https://row-art.vercel.app/" />
+        <meta name="twitter:card" content="summary_large_image" />
+      </Head>
       <main className={styles.main}>
         <h1 className={styles.hed}>
           <a className={styles.row} href="https://restofworld.org">
@@ -103,9 +122,6 @@ export default function Home({ feed: { items } }) {
   )
 }
 
-// This function gets called at build time on server-side.
-// It may be called again, on a serverless function, if
-// revalidation is enabled and a new request comes in
 export async function getStaticProps() {
   const parser = new Parser({
     customFields: {
@@ -121,9 +137,6 @@ export async function getStaticProps() {
     props: {
       feed,
     },
-    // Next.js will attempt to re-generate the page:
-    // - When a request comes in
-    // - At most once every second
-    revalidate: 600, // In seconds
+    revalidate: 600,
   }
 }
