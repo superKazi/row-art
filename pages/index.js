@@ -48,19 +48,19 @@ export default function Home({ feed: { items } }) {
   return (
     <>
       <Head>
-        <title>Rest of World Latest Stories via imagery</title>
+        <title>Rest of World Latest Stories via Imagery</title>
         <meta
           name="Description"
-          content="If you’d like to choose which recent story to read solely by lede image, try this!"
+          content="If you’d like to choose which recent story to read solely by lead image, try this!"
         />
         <meta name="robots" content="noindex, follow" />
         <meta
           property="og:title"
-          content="Rest of World Latest Stories via imagery"
+          content="Rest of World Latest Stories via Imagery"
         />
         <meta
           property="og:description"
-          content="If you’d like to choose which recent story to read solely by lede image, try this!"
+          content="If you’d like to choose which recent story to read solely by lead image, try this!"
         />
         <meta property="og:image" content={images[0].media.$.url} />
         <meta property="og:url" content="https://row-art.vercel.app/" />
