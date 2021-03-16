@@ -24,10 +24,10 @@ export default function RowImage({
   useLayoutEffect(() => {
     if (screen === 'portrait' && index !== 0) {
       setStyleObj({
-        transform: `translateY(-${randomInteger(
+        transform: `translateY(calc(${randomInteger(
           50,
           height - myImg.current.clientHeight
-        )}px)`,
+        )}px * -1 + 1rem))`,
       })
     }
     if (screen === 'landscape') {
@@ -62,9 +62,7 @@ export default function RowImage({
           alt="check out the story"
         />
         <figcaption className={styles.cap}>{contentSnippet}</figcaption>
-        {credit && (
-          <cite className={styles.cred}>{credit}</cite>
-        )}
+        {credit && <cite className={styles.cred}>{credit}</cite>}
       </figure>
     </a>
   )
