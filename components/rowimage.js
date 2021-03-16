@@ -61,9 +61,6 @@ export default function RowImage({
           height="90"
           alt="check out the story"
         />
-        <noscript>
-          <img src={url} alt="check out the story" />
-        </noscript>
         <figcaption className={styles.cap}>{contentSnippet}</figcaption>
         {credit && (
           <cite className={styles.cred}>{credit}</cite>

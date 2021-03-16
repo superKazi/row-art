@@ -20,7 +20,6 @@ export default function Home({ feed: { items } }) {
 
   const [screen, setScreen] = useState(false)
   const [height, setHeight] = useState(false)
-  const [ml, setMl] = useState(false)
 
   useEffect(() => {
     let vh = window.innerHeight * 0.01
